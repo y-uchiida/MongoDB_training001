@@ -28,10 +28,32 @@ $ docker-compose up -d
 $ docker-compose down
 ```
 
-コンテナ内のデータベースに作成したデータを削除する場合は、以下のコマンドでコンテナを終了すると、データボリュームも削除されます
+コンテナ内のデータベースに作成したデータを削除する場合は、以下のコマンドでコンテナを終了すると、データボリュームも削除されます  
+内容を初期状態にリセットする場合も、ボリューム削除後に再度コンテナを起動しなおします
 
 ```
-$ docker-compose down
+$ docker-compose down -v
+```
+
+# 使用方法
+
+## コンテナ接続
+
+MongoDB を操作するため、サーバが動作しているコンテナへ接続する必要があります  
+当リポジトリの`docker-compose.yml` があるディレクトリで以下コマンドを実行します
+
+```
+$ docker-compose exec mongo bash
+```
+
+## mongoDB のクライアント起動(mongo コマンド)
+
+MongoDB を CLI で操作するため、`mongo` コマンドを実行します  
+`booklist` データベースを利用するため、`init.js` で `mongo` というユーザーを作成して捜査権限を与えています  
+mongo ユーザーでデータベースクライアントを利用するには、コンテナのターミナル上で以下のコマンドを実行します
+
+```
+root@1792fb28dc5b:/# mongo -u mongo -p password --authenticationDatabase admin
 ```
 
 # 参考
